@@ -1,7 +1,9 @@
 package com.example.EvaM2.service
 
 import com.example.EvaM2.entity.Characters
+import com.example.EvaM2.entity.CharactersView
 import com.example.EvaM2.repository.CharactersRepository
+import com.example.EvaM2.repository.CharactersViewRepository
 import com.example.EvaM2.repository.FilmRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -14,9 +16,15 @@ class CharactersService {
 
     @Autowired
     lateinit var charactersRepository: CharactersRepository
+    @Autowired
+    lateinit var charactersViewRepository: CharactersViewRepository
 
     @Autowired
     lateinit var filmRepository: FilmRepository
+
+    fun listWithScene(): List<CharactersView> {
+        return charactersViewRepository.findAll()
+    }
 
     fun list(): List<Characters> {
         return charactersRepository.findAll()

@@ -1,8 +1,8 @@
 package com.example.EvaM2.repository
 
-import com.example.EvaM2.entity.SceneWithFilmName
+import com.example.EvaM2.entity.SceneView
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SceneWithFilmNameRepository : JpaRepository<SceneWithFilmName, Long>
+interface SceneViewRepository : JpaRepository<SceneView, Long>

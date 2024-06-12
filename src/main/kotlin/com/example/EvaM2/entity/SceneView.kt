@@ -6,7 +6,7 @@ import jakarta.persistence.Id
 import java.math.BigDecimal
 
 @Entity
-class SceneWithFilmName(
+class SceneView(
     @Id
     @Column(name = "scene_id")
     val sceneId: Long,

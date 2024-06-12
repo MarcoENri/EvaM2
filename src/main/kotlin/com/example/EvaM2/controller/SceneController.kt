@@ -1,9 +1,8 @@
 package com.example.EvaM2.controller
 
 import com.example.EvaM2.entity.Scene
-import com.example.EvaM2.entity.SceneWithFilmName
+import com.example.EvaM2.entity.SceneView
 import com.example.EvaM2.service.SceneService
-import com.example.EvaM2.service.SceneWithFilmNameService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,15 +11,14 @@ import org.springframework.web.bind.annotation.*
 @RestController
 
 @RequestMapping("/scene")
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class SceneController {
     @Autowired
     lateinit var sceneService: SceneService
-    @Autowired
-    lateinit var sceneWithFilmNameService: SceneWithFilmNameService
 
     @GetMapping("/withFilmName")
-    fun listScenesWithFilmName(): ResponseEntity<List<SceneWithFilmName>> {
-        val scenes = sceneWithFilmNameService.list()
+    fun listWithFilm(): ResponseEntity<List<SceneView>> {
+        val scenes = sceneService.listWithFilm()
         return ResponseEntity(scenes, HttpStatus.OK)
     }
 

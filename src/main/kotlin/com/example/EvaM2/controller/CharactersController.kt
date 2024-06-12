@@ -1,6 +1,7 @@
 package com.example.EvaM2.controller
 
 import com.example.EvaM2.entity.Characters
+import com.example.EvaM2.entity.CharactersView
 import com.example.EvaM2.service.CharactersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -9,9 +10,15 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/characters")
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class CharactersController {
     @Autowired
     lateinit var charactersService: CharactersService
+
+    @GetMapping("/with-scene")
+    fun listWithScene(): List<CharactersView> {
+        return charactersService.listWithScene()
+    }
 
     @GetMapping
     fun list(): List<Characters> {
