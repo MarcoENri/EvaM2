@@ -1,5 +1,6 @@
 package com.example.EvaM2.service
 
+import com.example.EvaM2.entity.Film
 import com.example.EvaM2.entity.Scene
 import com.example.EvaM2.entity.SceneView
 import com.example.EvaM2.repository.FilmRepository
@@ -62,5 +63,17 @@ class SceneService {
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
+    }
+
+    fun listById(id: Long):Scene {
+        return sceneRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found") }
+    }
+
+    fun delete(id: Long) {
+        if (!sceneRepository.existsById(id)) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found")
+        }
+        filmRepository.deleteById(id)
     }
 }

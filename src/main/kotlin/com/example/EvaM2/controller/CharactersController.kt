@@ -2,6 +2,7 @@ package com.example.EvaM2.controller
 
 import com.example.EvaM2.entity.Characters
 import com.example.EvaM2.entity.CharactersView
+import com.example.EvaM2.entity.Film
 import com.example.EvaM2.service.CharactersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -20,6 +21,11 @@ class CharactersController {
         return charactersService.listWithScene()
     }
 
+    @GetMapping("/{id}")
+    fun listById(@PathVariable id: Long): Characters {
+        return charactersService.listById(id)
+    }
+
     @GetMapping
     fun list(): List<Characters> {
         return charactersService.list()
@@ -30,14 +36,16 @@ class CharactersController {
         return charactersService.save(characters)
     }
 
-    @PutMapping
-    fun update(@RequestBody characters: Characters): ResponseEntity<Characters> {
-        return ResponseEntity(charactersService.update(characters), HttpStatus.OK)
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long?, @RequestBody characters: Characters?): ResponseEntity<Characters> {
+        val updatedCharacters= charactersService.update(characters!!)
+        return ResponseEntity.ok(updatedCharacters)
     }
 
-    @PatchMapping
-    fun patch(@RequestBody characters: Characters): ResponseEntity<Characters> {
-        return ResponseEntity(charactersService.updateName(characters), HttpStatus.OK)
+    @PatchMapping("/{id}")
+    fun patch(@PathVariable id: Long?, @RequestBody characters: Characters?): ResponseEntity<Characters> {
+        val updatedCharacters = charactersService.updateName(characters!!)
+        return ResponseEntity.ok(updatedCharacters)
     }
 
     @GetMapping("/validateCost/{filmId}")
@@ -48,5 +56,9 @@ class CharactersController {
         } catch (ex: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.message)
         }
+    }
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long) {
+        charactersService.delete(id)
     }
 }

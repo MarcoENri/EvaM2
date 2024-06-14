@@ -1,7 +1,8 @@
-CREATE VIEW scenes_with_film AS
-SELECT s.*, s.description AS scene_description, s.minutes, s.location, s.setting, f.title AS film_title
+CREATE VIEW view_scenes AS
+SELECT s.id, s.description, s.minutes, s.location, s.setting, f.title AS film_title
 FROM scene s
          JOIN film f ON s.film_id = f.id;
+
 
 CREATE VIEW characters_with_scene AS
 SELECT c.*, s.description AS scene_description

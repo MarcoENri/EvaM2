@@ -2,6 +2,7 @@ package com.example.EvaM2.service
 
 import com.example.EvaM2.entity.Characters
 import com.example.EvaM2.entity.CharactersView
+import com.example.EvaM2.entity.Film
 import com.example.EvaM2.repository.CharactersRepository
 import com.example.EvaM2.repository.CharactersViewRepository
 import com.example.EvaM2.repository.FilmRepository
@@ -29,6 +30,12 @@ class CharactersService {
     fun list(): List<Characters> {
         return charactersRepository.findAll()
     }
+
+    fun listById(id: Long): Characters {
+        return charactersRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found") }
+    }
+
 
     fun save(characters: Characters): Characters {
         return charactersRepository.save(characters)
@@ -67,5 +74,11 @@ class CharactersService {
         if (totalMinutes > film.duration) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El costo total de los personajes supera la duración de la película.")
         }
+    }
+    fun delete(id: Long) {
+        if (!charactersRepository.existsById(id)) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found")
+        }
+        filmRepository.deleteById(id)
     }
 }

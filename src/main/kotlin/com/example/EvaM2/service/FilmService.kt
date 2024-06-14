@@ -18,6 +18,11 @@ class FilmService {
         return filmRepository.findAll()
     }
 
+    fun listById(id: Long): Film {
+        return filmRepository.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found") }
+    }
+
     fun save(film: Film): Film {
         return filmRepository.save(film)
     }
@@ -43,5 +48,12 @@ class FilmService {
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
+    }
+
+    fun delete(id: Long) {
+        if (!filmRepository.existsById(id)) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Film with id $id not found")
+        }
+        filmRepository.deleteById(id)
     }
 }

@@ -3,35 +3,48 @@ package com.example.EvaM2.controller
 import com.example.EvaM2.entity.Film
 import com.example.EvaM2.service.FilmService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@RestController
 
+@RestController
 @RequestMapping("/film")
 @CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class FilmController {
+
     @Autowired
     lateinit var filmService: FilmService
 
     @GetMapping
-    fun list(): List<Film>{
+    fun list(): List<Film> {
         return filmService.list()
     }
 
+    @GetMapping("/{id}")
+    fun listById(@PathVariable id: Long): Film {
+        return filmService.listById(id)
+    }
+
     @PostMapping
-    fun save(@RequestBody film: Film): Film{
+    fun save(@RequestBody film: Film): Film {
         return filmService.save(film)
     }
 
-    @PutMapping
-    fun update(@RequestBody film: Film): ResponseEntity<Film>{
-        return ResponseEntity(filmService.update(film), HttpStatus.OK)
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long?, @RequestBody film: Film?): ResponseEntity<Film> {
+        val updatedFilm = filmService.update(film!!)
+        return ResponseEntity.ok(updatedFilm)
     }
 
-    @PatchMapping
-    fun patch(@RequestBody film: Film): ResponseEntity<Film>{
-        return ResponseEntity(filmService.updateName(film), HttpStatus.OK)
+    @PatchMapping("/{id}")
+    fun patch(@PathVariable id: Long?, @RequestBody film: Film?): ResponseEntity<Film> {
+        val updatedFilm = filmService.updateName(film!!)
+        return ResponseEntity.ok(updatedFilm)
     }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long) {
+        filmService.delete(id)
+    }
+
 }

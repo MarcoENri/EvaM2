@@ -1,5 +1,6 @@
 package com.example.EvaM2.controller
 
+import com.example.EvaM2.entity.Characters
 import com.example.EvaM2.entity.Scene
 import com.example.EvaM2.entity.SceneView
 import com.example.EvaM2.service.SceneService
@@ -16,10 +17,15 @@ class SceneController {
     @Autowired
     lateinit var sceneService: SceneService
 
-    @GetMapping("/withFilmName")
+    @GetMapping("/with-film-Name")
     fun listWithFilm(): ResponseEntity<List<SceneView>> {
-        val scenes = sceneService.listWithFilm()
-        return ResponseEntity(scenes, HttpStatus.OK)
+        val scene = sceneService.listWithFilm()
+        return ResponseEntity(scene, HttpStatus.OK)
+    }
+
+    @GetMapping("/{id}")
+    fun listById(@PathVariable id: Long): Scene {
+        return sceneService.listById(id)
     }
 
     @GetMapping
@@ -32,13 +38,20 @@ class SceneController {
         return sceneService.save(scene)
     }
 
-    @PutMapping
-    fun update(@RequestBody scene: Scene): ResponseEntity<Scene>{
-        return ResponseEntity(sceneService.update(scene), HttpStatus.OK)
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long?, @RequestBody scene: Scene?): ResponseEntity<Scene> {
+        val updatedScene= sceneService.update(scene!!)
+        return ResponseEntity.ok(updatedScene)
     }
 
-    @PatchMapping
-    fun patch(@RequestBody scene: Scene): ResponseEntity<Scene>{
-        return ResponseEntity(sceneService.updateName(scene), HttpStatus.OK)
+    @PatchMapping("/{id}")
+    fun patch(@PathVariable id: Long?, @RequestBody scene: Scene?): ResponseEntity<Scene> {
+        val updatedScene = sceneService.updateName(scene!!)
+        return ResponseEntity.ok(updatedScene)
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long) {
+        sceneService.delete(id)
     }
 }
