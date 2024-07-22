@@ -10,10 +10,10 @@ import java.math.BigDecimal
 @Table(name = "view_scenes")
 class SceneView(
     @Id
-    @Column(name = "scene_id")
+    @Column(name = "id")
     val sceneId: Long,
 
-    @Column(name = "scene_description")
+    @Column(name = "description")
     val sceneDescription: String,
 
     @Column(name = "minutes")

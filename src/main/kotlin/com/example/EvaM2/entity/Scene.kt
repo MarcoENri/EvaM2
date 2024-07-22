@@ -1,11 +1,6 @@
 package com.example.EvaM2.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity
@@ -21,6 +16,7 @@ class Scene {
     var location: String? = null
     var setting: String? = null
 
+
     @Column(name = "film_id")
-    var filmId: Long? = null
+    var filmId:Long? = null
 }
