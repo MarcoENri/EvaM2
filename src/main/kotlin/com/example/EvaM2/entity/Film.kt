@@ -27,6 +27,6 @@ class Film {
 
     var genre: String? = null
 
-    @Column(name = "box_office", precision = 30, scale = 2)
-    var boxOffice: BigDecimal? = null
+    @Column(name = "box_office")
+    var boxOffice: Double? = null
 }
